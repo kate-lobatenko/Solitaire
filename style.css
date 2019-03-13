@@ -1,8 +1,8 @@
 html,body {
 	width: 100%;
-	height: 100%;
 	padding-bottom: 30px;
 }
+
 .game {
 	border: 1px solid #000;
 	width: 1000px;
@@ -49,7 +49,19 @@ html,body {
 	border: 2px solid #cac6c6;
 	float: left;
 	grid-column: 1;
-	margin-top: -145px;
+	margin-top: -160px;
+}
+
+p + span {
+	background: red;
+}
+
+.card:not(.open) + .card.open {
+	margin-top: -160px;
+}
+
+.card.open {
+	margin-top: -145px
 }
 
 .card.selected {
