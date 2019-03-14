@@ -14,7 +14,6 @@ html,body {
 
 .deck {
 	min-height: 170px;
-	width: 100%;
 }
 
 .col-3 .deck {
@@ -47,7 +46,6 @@ html,body {
 	padding: 5px;
 	box-sizing: border-box;
 	border: 2px solid #cac6c6;
-	float: left;
 	grid-column: 1;
 	margin-top: -160px;
 }
@@ -69,6 +67,11 @@ p + span {
 }
 
 .deck.flat .card {
+	margin-top: -170px;
+}
+
+.col-3 .card.open {
+	margin-left: calc(100% + 20px);
 	margin-top: -170px;
 }
 
@@ -134,7 +137,6 @@ p + span {
 }
 
 .col, .col-3 {
-	display: flex;
 	box-sizing: border-box;
 	padding: 0 10px;
 }

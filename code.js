@@ -40,8 +40,6 @@ function DealDeck() {
 	Deck.call(this);
 
 	//deal deck must create extra deck node nearby to place opened cards there
-	//deal deck with extra deck must be wrapped in .col-3 div
-
 	this.$el.classList.add('flat');
 }
 
