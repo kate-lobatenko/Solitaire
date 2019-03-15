@@ -19,7 +19,7 @@ const GAME_SETTINGS = {
 	colors: [0, 1] //red, black
 }
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
 	new Game();
 });
 
@@ -93,7 +93,7 @@ function Card(cardKit) {
 }
 
 Game.prototype = {
-	createDecks: function() {
+	createDecks: function () {
 		let kits = this.getShuffledDecks();
 
 		this.$stashContainer.innerHTML = '';
@@ -102,7 +102,7 @@ Game.prototype = {
 		this.dealDeck = new DealDeck(kits.splice(0, GAME_SETTINGS.amounts.dealDeck));
 		this.$stashContainer.appendChild(this.dealDeck.$wrapper);
 
-		for(let i = 0; i < GAME_SETTINGS.suits.length; i++) {
+		for (let i = 0; i < GAME_SETTINGS.suits.length; i++) {
 			let finishDeck = new FinishDeck([]);
 
 			this.$stashContainer.appendChild(finishDeck.$wrapper);
@@ -110,7 +110,7 @@ Game.prototype = {
 
 		let deckSettings = GAME_SETTINGS.amounts.decks;
 
-		for(let i = 0; i < deckSettings.length; i++) {
+		for (let i = 0; i < deckSettings.length; i++) {
 			let deck = new PlayingDeck(kits.splice(0, deckSettings[i]));
 
 			this.$playContainer.appendChild(deck.$wrapper);
@@ -118,7 +118,7 @@ Game.prototype = {
 		//create decks here
 	},
 
-	getShuffledDecks: function() {
+	getShuffledDecks: function () {
 		let kits = this.cardKits.slice();
 		let shuffledKits = [];
 
@@ -131,85 +131,292 @@ Game.prototype = {
 		return shuffledKits;
 	},
 
-	generateCardKits: function() {
-		return [
-			{color: 0, suit: 0, number: 1},
-			{color: 0, suit: 0, number: 2},
-			{color: 0, suit: 0, number: 3},
-			{color: 0, suit: 0, number: 4},
-			{color: 0, suit: 0, number: 5},
-			{color: 0, suit: 0, number: 6},
-			{color: 0, suit: 0, number: 7},
-			{color: 0, suit: 0, number: 8},
-			{color: 0, suit: 0, number: 9},
-			{color: 0, suit: 0, number: 10},
-			{color: 0, suit: 0, number: 11},
-			{color: 0, suit: 0, number: 12},
-			{color: 0, suit: 0, number: 13},
+	generateCardKits: function () {
+		return [{
+				color: 0,
+				suit: 0,
+				number: 1
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 2
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 3
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 4
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 5
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 6
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 7
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 8
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 9
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 10
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 11
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 12
+			},
+			{
+				color: 0,
+				suit: 0,
+				number: 13
+			},
 
-			{color: 0, suit: 1, number: 1},
-			{color: 0, suit: 1, number: 2},
-			{color: 0, suit: 1, number: 3},
-			{color: 0, suit: 1, number: 4},
-			{color: 0, suit: 1, number: 5},
-			{color: 0, suit: 1, number: 6},
-			{color: 0, suit: 1, number: 7},
-			{color: 0, suit: 1, number: 8},
-			{color: 0, suit: 1, number: 9},
-			{color: 0, suit: 1, number: 10},
-			{color: 0, suit: 1, number: 11},
-			{color: 0, suit: 1, number: 12},
-			{color: 0, suit: 1, number: 13},
+			{
+				color: 0,
+				suit: 1,
+				number: 1
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 2
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 3
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 4
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 5
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 6
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 7
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 8
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 9
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 10
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 11
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 12
+			},
+			{
+				color: 0,
+				suit: 1,
+				number: 13
+			},
 
-			{color: 1, suit: 2, number: 1},
-			{color: 1, suit: 2, number: 2},
-			{color: 1, suit: 2, number: 3},
-			{color: 1, suit: 2, number: 4},
-			{color: 1, suit: 2, number: 5},
-			{color: 1, suit: 2, number: 6},
-			{color: 1, suit: 2, number: 7},
-			{color: 1, suit: 2, number: 8},
-			{color: 1, suit: 2, number: 9},
-			{color: 1, suit: 2, number: 10},
-			{color: 1, suit: 2, number: 11},
-			{color: 1, suit: 2, number: 12},
-			{color: 1, suit: 2, number: 13},
+			{
+				color: 1,
+				suit: 2,
+				number: 1
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 2
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 3
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 4
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 5
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 6
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 7
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 8
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 9
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 10
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 11
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 12
+			},
+			{
+				color: 1,
+				suit: 2,
+				number: 13
+			},
 
-			{color: 1, suit: 3, number: 1},
-			{color: 1, suit: 3, number: 2},
-			{color: 1, suit: 3, number: 3},
-			{color: 1, suit: 3, number: 4},
-			{color: 1, suit: 3, number: 5},
-			{color: 1, suit: 3, number: 6},
-			{color: 1, suit: 3, number: 7},
-			{color: 1, suit: 3, number: 8},
-			{color: 1, suit: 3, number: 9},
-			{color: 1, suit: 3, number: 10},
-			{color: 1, suit: 3, number: 11},
-			{color: 1, suit: 3, number: 12},
-			{color: 1, suit: 3, number: 13}			
+			{
+				color: 1,
+				suit: 3,
+				number: 1
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 2
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 3
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 4
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 5
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 6
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 7
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 8
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 9
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 10
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 11
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 12
+			},
+			{
+				color: 1,
+				suit: 3,
+				number: 13
+			}
 		];
 	},
 
-	getProperFinishDeck: function(suit) {
-		return this.finishDecks.filter((deck) => deck.suit === suit)[0]
-				|| this.finishDecks.filter((deck) => deck.isEmpty())[0];
+	getProperFinishDeck: function (suit) {
+		return this.finishDecks.filter((deck) => deck.suit === suit)[0] ||
+			this.finishDecks.filter((deck) => deck.isEmpty())[0];
 	},
 
-	registerEvents: function() {
+	registerEvents: function () {
 		this.$el.addEventListener('deck.click', this.onDeckClick().bind(this));
 	},
 
-	onDeckClick: function() {
+	onDeckClick: function () {
 		let selectedDeck = null;
 		let selectedCards = [];
 
-		return function(e) {
+		return function (e) {
 			let deck = e.detail.deck;
 			let cards = e.detail.cards;
-			
+
 			if (selectedDeck) {
-				if(this.moveCards(selectedDeck, deck, selectedCards)){
+				if (this.moveCards(selectedDeck, deck, selectedCards)) {
 					selectedDeck = null;
 					selectedCards = [];
 				}
@@ -220,7 +427,7 @@ Game.prototype = {
 		}
 	},
 
-	moveCards: function(deckFrom, deckTo, cards) {
+	moveCards: function (deckFrom, deckTo, cards) {
 		if (deckTo.addCards(cards)) {
 			deckFrom.removeCards(cards);
 
@@ -232,8 +439,8 @@ Game.prototype = {
 }
 
 Deck.prototype = {
-	createCards: function(cardKits) {
-		for(let i = 0; i < cardKits.length; i++) {
+	createCards: function (cardKits) {
+		for (let i = 0; i < cardKits.length; i++) {
 			let card = new Card(cardKits[i]);
 
 			this.$el.appendChild(card.$el);
@@ -241,11 +448,11 @@ Deck.prototype = {
 		}
 	},
 
-	registerEvents: function() {
+	registerEvents: function () {
 		this.$el.addEventListener('card.click', this.onCardClick.bind(this));
 	},
 
-	onCardClick: function(e) {
+	onCardClick: function (e) {
 		let cardIndex = this.cards.indexOf(e.detail.card);
 		let cards = this.cards.slice(cardIndex);
 
@@ -261,8 +468,8 @@ Deck.prototype = {
 		}));
 	},
 
-	getCardIndex: function(card) {
-		for(let i = 0; i < this.cards.length; i++) {
+	getCardIndex: function (card) {
+		for (let i = 0; i < this.cards.length; i++) {
 			let currentCard = this.cards[i];
 
 			// refactor this shit
@@ -274,12 +481,12 @@ Deck.prototype = {
 		return -1;
 	},
 
-	addCards: function(cards) {
+	addCards: function (cards) {
 		if (!this.verifyTurn(cards)) {
 			return false;
 		}
 
-		for(let i = 0; i < cards.length; i++) {
+		for (let i = 0; i < cards.length; i++) {
 			this.$el.appendChild(cards[i].$el);
 			this.cards.push(cards[i]);
 		}
@@ -287,46 +494,46 @@ Deck.prototype = {
 		return true;
 	},
 
-	removeCards: function(cards) {
+	removeCards: function (cards) {
 		let cardIndex = this.getCardIndex(cards[0]);
 
 		this.cards.splice(cardIndex);
 	},
 
-	verifyTurn: function(cards) {
+	verifyTurn: function (cards) {
 		let upperCard = cards[0];
 		let cardTo = this.cards.slice(-1).pop();
 
-		return upperCard.color != cardTo.color 
-				&& cardTo.number - upperCard.number === 1
-				// or this is king and deck is empty;
+		return upperCard.color != cardTo.color &&
+			cardTo.number - upperCard.number === 1
+		// or this is king and deck is empty;
 	}
 }
 
 Card.prototype = {
-	select: function() {
+	select: function () {
 		this.$el.classList.add('selected');
 	},
 
-	unselect: function() {
+	unselect: function () {
 		this.$el.classList.remove('selected');
 	},
 
-	open: function() {
+	open: function () {
 		this.$el.classList.add('open');
 		this.isOpen = true;
 	},
 
-	close: function() {
+	close: function () {
 		this.$el.classList.remove('open');
 		this.isOpen = false;
 	},
 
-	isClosed: function() {
+	isClosed: function () {
 		return !this.isOpen;
 	},
 
-	onClick: function(e) {
+	onClick: function (e) {
 		e.stopPropagation();
 
 		this.$el.dispatchEvent(new CustomEvent('card.click', {
@@ -335,30 +542,40 @@ Card.prototype = {
 				card: this
 			}
 		}));
-	},
-
-	onDoubleClick: function() {
 
 	},
 
-	registerEvents: function() {
+	looseFocus: function (event) {
+		const isClickInside = this.$el.contains(event.target);
+
+		if (!isClickInside) {
+			this.$el.classList.remove('selected');
+		}
+	},
+
+	onDoubleClick: function () {
+
+	},
+
+	registerEvents: function () {
 		this.$el.addEventListener('click', this.onClick.bind(this));
 		this.$el.addEventListener('dblclick', this.onDoubleClick.bind(this));
+		document.addEventListener('click', this.looseFocus.bind(this));
 	}
 }
 
 DealDeck.prototype = Object.assign(Object.create(Deck.prototype), {
-	onClick: function() {
+	onClick: function () {
 
 	},
 
-	registerEvents: function() {
+	registerEvents: function () {
 		Deck.prototype.registerEvents.call(this);
 
 		this.$el.addEventListener('click', this.onClick.bind(this));
 	},
 
-	onClick: function(e) {
+	onClick: function (e) {
 		let closedCard = this.getFirstClosedCard();
 
 		if (closedCard) {
@@ -368,37 +585,37 @@ DealDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 		}
 	},
 
-	getFirstClosedCard: function() {
+	getFirstClosedCard: function () {
 		return this.cards.filter((card) => card.isClosed())[0];
 	},
 
-	revert: function() {
+	revert: function () {
 		this.cards.forEach((card) => card.close());
 	},
 
-	addCards: function() {
+	addCards: function () {
 		return false;
 	}
 });
 
 FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
-	isEmpty: function() {
+	isEmpty: function () {
 		return !(this.suit || this.cards.length);
 	},
 
-	setEmpty: function() {
+	setEmpty: function () {
 		this.suit = null;
 	}
 });
 
 PlayingDeck.prototype = Object.assign(Object.create(Deck.prototype), {
-	openLastCard: function() {
+	openLastCard: function () {
 		if (this.cards.length) {
 			this.cards.slice(-1).pop().open();
 		}
 	},
 
-	removeCards: function() {
+	removeCards: function () {
 		Deck.prototype.removeCards.apply(this, arguments);
 
 		this.openLastCard();
