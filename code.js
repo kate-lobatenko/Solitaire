@@ -115,7 +115,7 @@ Game.prototype = {
 
 			this.$playContainer.appendChild(deck.$wrapper);
 		}
-		//create decks here
+
 	},
 
 	getShuffledDecks: function () {
@@ -233,6 +233,13 @@ Deck.prototype = {
 
 	registerEvents: function () {
 		this.$el.addEventListener('card.click', this.onCardClick.bind(this));
+		this.$el.addEventListener('card.doubleclick', this.onDoubleCardClick.bind(this));
+	},
+
+	onDoubleCardClick: function (e) {
+		console.log("You clicked twice at the card:", e);
+		// this.cards.slice(1,this.card);
+		// console.log(this.cards);
 	},
 
 	onCardClick: function (e) {
@@ -287,9 +294,9 @@ Deck.prototype = {
 		let upperCard = cards[0];
 		let cardTo = this.cards.slice(-1).pop();
 
-		return upperCard.color != cardTo.color &&
-			cardTo.number - upperCard.number === 1
-		// or this is king and deck is empty;
+		return (upperCard.color != cardTo.color) &&
+			(cardTo.number - upperCard.number === 1) ||
+			(cardTo.number === 13 && cards.length === 0) // or this is king and deck is empty;
 	}
 }
 
@@ -336,7 +343,15 @@ Card.prototype = {
 		}
 	},
 
-	onDoubleClick: function () {
+	onDoubleClick: function (e) {
+		e.stopPropagation();
+
+		this.$el.dispatchEvent(new CustomEvent('card.doubleclick', {
+			bubbles: true,
+			detail: {
+				card: this
+			}
+		}));
 
 	},
 
