@@ -132,270 +132,53 @@ Game.prototype = {
 	},
 
 	generateCardKits: function () {
-		return [{
-				color: 0,
-				suit: 0,
-				number: 1
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 2
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 3
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 4
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 5
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 6
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 7
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 8
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 9
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 10
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 11
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 12
-			},
-			{
-				color: 0,
-				suit: 0,
-				number: 13
-			},
 
-			{
-				color: 0,
-				suit: 1,
-				number: 1
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 2
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 3
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 4
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 5
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 6
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 7
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 8
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 9
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 10
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 11
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 12
-			},
-			{
-				color: 0,
-				suit: 1,
-				number: 13
-			},
+		const newArr = [];
+		let k, j;
+		const sizeArr = GAME_SETTINGS.numbers.length * GAME_SETTINGS.suits.length;
+		const lengthNumbArr = GAME_SETTINGS.numbers.length;
+		for (let i = 0; i < sizeArr; i++) {
 
-			{
-				color: 1,
-				suit: 2,
-				number: 1
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 2
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 3
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 4
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 5
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 6
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 7
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 8
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 9
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 10
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 11
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 12
-			},
-			{
-				color: 1,
-				suit: 2,
-				number: 13
-			},
-
-			{
-				color: 1,
-				suit: 3,
-				number: 1
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 2
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 3
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 4
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 5
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 6
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 7
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 8
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 9
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 10
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 11
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 12
-			},
-			{
-				color: 1,
-				suit: 3,
-				number: 13
+			if (i >= sizeArr / 2) {
+				k = 1;
+			} else {
+				k = 0;
 			}
-		];
+
+			switch (Math.floor(i / lengthNumbArr)) {
+				case 0:
+					j = 0;
+					break;
+				case 1:
+					j = 1;
+					break;
+				case 2:
+					j = 2;
+					break;
+				case 3:
+					j = 3;
+					break;
+			}
+
+			if (i < lengthNumbArr) {
+				newArr[i] = {
+					color: GAME_SETTINGS.colors[k],
+					suit: GAME_SETTINGS.suits[j],
+					number: GAME_SETTINGS.numbers[i]
+				};
+
+			} else {
+				newArr[i] = {
+					color: GAME_SETTINGS.colors[k],
+					suit: GAME_SETTINGS.suits[j],
+					number: i % GAME_SETTINGS.numbers.length + 1
+				};
+			}
+
+		}
+
+		return newArr;
+
 	},
 
 	getProperFinishDeck: function (suit) {
