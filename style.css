@@ -10,6 +10,9 @@ html,body {
 	padding: 10px;
 	min-height: 800px;
 	background: #1b4c25;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 	user-select: none;
 }
 
@@ -52,6 +55,10 @@ html,body {
 	grid-column: 1;
 	margin-top: -160px;
 	pointer-events: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 p + span {
