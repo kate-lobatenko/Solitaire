@@ -237,9 +237,9 @@ Deck.prototype = {
 	},
 
 	onDoubleCardClick: function (e) {
-		console.log("You clicked twice at the card:", e);
-		// this.cards.slice(1,this.card);
-		// console.log(this.cards);
+		console.log("You clicked twice at the card:", e.detail.card);
+
+
 	},
 
 	onCardClick: function (e) {
@@ -282,6 +282,7 @@ Deck.prototype = {
 		}
 
 		return true;
+
 	},
 
 	removeCards: function (cards) {
@@ -363,10 +364,6 @@ Card.prototype = {
 }
 
 DealDeck.prototype = Object.assign(Object.create(Deck.prototype), {
-	onClick: function () {
-
-	},
-
 	registerEvents: function () {
 		Deck.prototype.registerEvents.call(this);
 
