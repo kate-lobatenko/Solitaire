@@ -17,7 +17,7 @@ const GAME_SETTINGS = {
 	suits: [0, 1, 2, 3], //hearts, diamonds, clovers, spades
 	suitsNames: ['hearts', 'diamonds', 'clovers', 'spades'],
 	colors: [0, 1] //red, black
-}
+};
 
 window.addEventListener('load', function () {
 	new Game();
@@ -233,14 +233,22 @@ Deck.prototype = {
 
 	registerEvents: function () {
 		this.$el.addEventListener('card.click', this.onCardClick.bind(this));
-		this.$el.addEventListener('card.doubleclick', this.onDoubleCardClick.bind(this));
+		this.$el.addEventListener('card.doubleclick', this.onCardDoubleClick.bind(this));
 	},
 
-	onDoubleCardClick: function (e) {
-		console.log("You clicked twice at the card:", e.detail.card);
 
+   onCardDoubleClick: function (e) {
+	   let cardIndex = this.cards.indexOf(e.detail.card);
+	   let cards = this.cards.slice(cardIndex);
 
-	},
+	   this.$el.dispatchEvent(new CustomEvent('deck.doubleclick', {
+		   bubbles: true,
+		   detail: {
+			   deck: this,
+			   cards: cards
+		   }
+	   }));
+   },
 
 	onCardClick: function (e) {
 		let cardIndex = this.cards.indexOf(e.detail.card);
@@ -400,6 +408,24 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 
 	setEmpty: function () {
 		this.suit = null;
+	},
+
+	registerEvents: function () {
+		this.$el.addEventListener('card.doubleclick', this.onCardDoubleClick.bind(this));
+	},
+
+	onCardDoubleClick: function (e) {
+		let cardIndex = this.cards.indexOf(e.detail.card);
+		let cards = this.cards.slice(cardIndex);
+		console.log("dfgfd");
+		this.$el.dispatchEvent(new CustomEvent('finishdeck.doubleclick', {
+			bubbles: true,
+			detail: {
+				deck: this,
+				cards: cards
+			}
+		}));
+
 	}
 });
 
