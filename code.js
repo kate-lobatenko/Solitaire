@@ -236,19 +236,27 @@ Deck.prototype = {
 		this.$el.addEventListener('card.doubleclick', this.onCardDoubleClick.bind(this));
 	},
 
+	onCardDoubleClick: function (e) {
+		let cardIndex = this.cards.indexOf(e.detail.card);
+		let cards = this.cards.slice(cardIndex);
 
-   onCardDoubleClick: function (e) {
-	   let cardIndex = this.cards.indexOf(e.detail.card);
-	   let cards = this.cards.slice(cardIndex);
+		this.cards.forEach((card) => card.unselect());
+		cards.forEach((card) => card.select());
 
-	   this.$el.dispatchEvent(new CustomEvent('deck.doubleclick', {
-		   bubbles: true,
-		   detail: {
-			   deck: this,
-			   cards: cards
-		   }
-	   }));
-   },
+		// this.$el.dispatchEvent(new CustomEvent('deck.doubleclick', {
+		// 	bubbles: true,
+		// 	detail: {
+		// 		deck: this,
+		// 		cards: cards
+		// 	}
+		// }));
+
+		// //  Game.prototype.getProperFinishDeck();
+		// FinishDeck.prototype.cards = [];
+		// FinishDeck.prototype.cards.push(cards);
+		// //  Game.prototype.onDeckClick();
+		console.log("cards: ", FinishDeck.prototype.cards);
+	},
 
 	onCardClick: function (e) {
 		let cardIndex = this.cards.indexOf(e.detail.card);
@@ -304,8 +312,8 @@ Deck.prototype = {
 		let cardTo = this.cards.slice(-1).pop();
 
 		return (upperCard.color != cardTo.color) &&
-			(cardTo.number - upperCard.number === 1) ||
-			(cardTo.number === 13 && cards.length === 0) // or this is king and deck is empty;
+			(cardTo.number - upperCard.number === 1)
+		// or this is king and deck is empty;
 	}
 }
 
@@ -408,24 +416,6 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 
 	setEmpty: function () {
 		this.suit = null;
-	},
-
-	registerEvents: function () {
-		this.$el.addEventListener('card.doubleclick', this.onCardDoubleClick.bind(this));
-	},
-
-	onCardDoubleClick: function (e) {
-		let cardIndex = this.cards.indexOf(e.detail.card);
-		let cards = this.cards.slice(cardIndex);
-		console.log("dfgfd");
-		this.$el.dispatchEvent(new CustomEvent('finishdeck.doubleclick', {
-			bubbles: true,
-			detail: {
-				deck: this,
-				cards: cards
-			}
-		}));
-
 	}
 });
 
