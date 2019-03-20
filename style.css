@@ -42,7 +42,8 @@ html,body {
 .card {
 	width: 100%;
 	height: 170px;
-	background: #7699e8;
+	background-image: -moz-repeating-linear-gradient(34% 6% 135deg,#0F1E59, #75A1BF, #3E3E63 50%);
+	background-image: -webkit-gradient(radial, center center, 20, center center, 80, from(#3c3), color-stop(0.4, #363), to(#030));
 	font-size: 30px;
 	line-height: 25px;
 	display: flex;
