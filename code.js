@@ -243,19 +243,7 @@ Deck.prototype = {
 		this.cards.forEach((card) => card.unselect());
 		cards.forEach((card) => card.select());
 
-		// this.$el.dispatchEvent(new CustomEvent('deck.doubleclick', {
-		// 	bubbles: true,
-		// 	detail: {
-		// 		deck: this,
-		// 		cards: cards
-		// 	}
-		// }));
-
-		// //  Game.prototype.getProperFinishDeck();
-		// FinishDeck.prototype.cards = [];
-		// FinishDeck.prototype.cards.push(cards);
-		// //  Game.prototype.onDeckClick();
-		console.log("cards: ", FinishDeck.prototype.cards);
+		console.log("cards: ", FinishDeck.apply(cards));
 	},
 
 	onCardClick: function (e) {
@@ -311,9 +299,9 @@ Deck.prototype = {
 		let upperCard = cards[0];
 		let cardTo = this.cards.slice(-1).pop();
 
-		return (upperCard.color != cardTo.color) &&
+		return (!cardTo && upperCard.number === 13) || // or this is king and deck is empty;
+			(upperCard.color != cardTo.color) &&
 			(cardTo.number - upperCard.number === 1)
-		// or this is king and deck is empty;
 	}
 }
 
