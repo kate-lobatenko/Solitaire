@@ -252,6 +252,7 @@ Deck.prototype = {
 	registerEvents: function () {
 		this.$el.addEventListener('card.click', this.onCardClick.bind(this));
 		this.$el.addEventListener('card.doubleclick', this.onCardDoubleClick.bind(this));
+		this.$el.addEventListener('click', this.onClick.bind(this));
 	},
 
 	onCardDoubleClick: function (e) {
@@ -261,7 +262,7 @@ Deck.prototype = {
 		this.cards.forEach((card) => card.unselect());
 		cards.forEach((card) => card.select());
 
-		FinishDeck.prototype.cards.push(e.detail.card);
+		FinishDeck.prototype.push(e.detail.card);
 		console.log("cards: ", FinishDeck.prototype.cards);
 	},
 
@@ -319,8 +320,8 @@ Deck.prototype = {
 		let cardTo = this.cards.slice(-1).pop();
 
 		return (!cardTo && upperCard.number === 13) ||
-			(cardTo && upperCard.color != cardTo.color) &&
-			(cardTo.number - upperCard.number === 1)
+			(cardTo && upperCard.color != cardTo.color &&
+				cardTo.number - upperCard.number === 1);
 	},
 
 	unselectCards: function () {
