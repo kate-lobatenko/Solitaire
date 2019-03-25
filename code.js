@@ -300,8 +300,17 @@ Deck.prototype = {
 		let cardTo = this.cards.slice(-1).pop();
 
 		return (!cardTo && upperCard.number === 13) || // or this is king and deck is empty;
-			(upperCard.color != cardTo.color) &&
+			(cardTo && upperCard.color != cardTo.color) &&
 			(cardTo.number - upperCard.number === 1)
+	},
+	onClick: function (e) {
+		this.$el.dispatchEvent(new CustomEvent('deck.click', {
+			bubbles: true,
+			detail: {
+				deck: this,
+				cards: []
+			}
+		}));
 	}
 }
 
@@ -382,6 +391,13 @@ DealDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 		} else {
 			this.revert();
 		}
+
+		this.$el.dispatchEvent(new CustomEvent('deck.click', {
+			bubbles: true,
+			detail: {
+				deck: null
+			}
+		}));
 	},
 
 	getFirstClosedCard: function () {
@@ -394,7 +410,20 @@ DealDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 
 	addCards: function () {
 		return false;
+	},
+
+	getSelectedCards: function (card) {
+		card.select();
+
+		return [card];
+	},
+
+	removeCards: function (cards) {
+		let cardIndex = this.getCardIndex(cards[0]);
+
+		this.cards.splice(cardIndex, 1);
 	}
+
 });
 
 FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
@@ -404,7 +433,9 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 
 	setEmpty: function () {
 		this.suit = null;
-	}
+	},
+
+	cards: []
 });
 
 PlayingDeck.prototype = Object.assign(Object.create(Deck.prototype), {
