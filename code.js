@@ -262,8 +262,11 @@ Deck.prototype = {
 		this.cards.forEach((card) => card.unselect());
 		cards.forEach((card) => card.select());
 
-		FinishDeck.prototype.push(e.detail.card);
-		console.log("cards: ", FinishDeck.prototype.cards);
+		if (e.detail.card.number === GAME_SETTINGS.numbers[0]) { 
+			FinishDeck.prototype.cards.push(e.detail.card);
+			console.log("cards: ", FinishDeck.prototype.cards);
+		}
+
 	},
 
 	onCardClick: function (e) {
