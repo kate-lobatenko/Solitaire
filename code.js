@@ -198,10 +198,28 @@ Game.prototype = {
 			let deck = e.detail.deck;
 			let cards = e.detail.cards;
 
+			// handle case when selectedDeck === deck
+
+			if (deck === null) {
+				if (selectedDeck) {
+					selectedDeck.unselectCards();
+				}
+
+				selectedDeck = null;
+				selectedCards = [];
+
+				return;
+			}
+
 			if (selectedDeck) {
 				if (this.moveCards(selectedDeck, deck, selectedCards)) {
 					selectedDeck = null;
 					selectedCards = [];
+					deck.unselectCards();
+				} else {
+					selectedDeck.unselectCards();
+					selectedDeck = deck;
+					selectedCards = cards;
 				}
 			} else {
 				selectedDeck = deck;
@@ -243,7 +261,8 @@ Deck.prototype = {
 		this.cards.forEach((card) => card.unselect());
 		cards.forEach((card) => card.select());
 
-		console.log("cards: ", FinishDeck.apply(cards));
+		FinishDeck.prototype.cards.push(e.detail.card);
+		console.log("cards: ", FinishDeck.prototype.cards);
 	},
 
 	onCardClick: function (e) {
@@ -299,10 +318,15 @@ Deck.prototype = {
 		let upperCard = cards[0];
 		let cardTo = this.cards.slice(-1).pop();
 
-		return (!cardTo && upperCard.number === 13) || // or this is king and deck is empty;
+		return (!cardTo && upperCard.number === 13) ||
 			(cardTo && upperCard.color != cardTo.color) &&
 			(cardTo.number - upperCard.number === 1)
 	},
+
+	unselectCards: function () {
+		this.cards.forEach((card) => card.unselect());
+	},
+
 	onClick: function (e) {
 		this.$el.dispatchEvent(new CustomEvent('deck.click', {
 			bubbles: true,
@@ -450,4 +474,5 @@ PlayingDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 
 		this.openLastCard();
 	}
+
 });
