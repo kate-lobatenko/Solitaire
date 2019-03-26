@@ -1,4 +1,5 @@
-html,body {
+html,
+body {
 	width: 100%;
 	padding-bottom: 30px;
 }
@@ -42,7 +43,7 @@ html,body {
 .card {
 	width: 100%;
 	height: 170px;
-	background-image: -moz-repeating-linear-gradient(34% 6% 135deg,#0F1E59, #75A1BF, #3E3E63 50%);
+	background-image: -moz-repeating-linear-gradient(34% 6% 135deg, #0F1E59, #75A1BF, #3E3E63 50%);
 	background-image: -webkit-gradient(radial, center center, 20, center center, 80, from(#3c3), color-stop(0.4, #363), to(#030));
 	font-size: 30px;
 	line-height: 25px;
@@ -62,11 +63,11 @@ html,body {
 	user-select: none;
 }
 
-p + span {
+p+span {
 	background: red;
 }
 
-.card:not(.open) + .card.open {
+.card:not(.open)+.card.open {
 	margin-top: -160px;
 }
 
@@ -105,27 +106,33 @@ p + span {
 	left: 5px;
 }
 
-.spades.open, .clovers.open {
+.spades.open,
+.clovers.open {
 	color: #000;
 }
 
-.hearts.open, .diamonds.open {
+.hearts.open,
+.diamonds.open {
 	color: #ea6262;
 }
 
-.spades:after, .spades:before {
+.spades:after,
+.spades:before {
 	content: '♠';
 }
 
-.hearts:after, .hearts:before {
+.hearts:after,
+.hearts:before {
 	content: '♥';
 }
 
-.clovers:after, .clovers:before {
+.clovers:after,
+.clovers:before {
 	content: '♣';
 }
 
-.diamonds:after, .diamonds:before {
+.diamonds:after,
+.diamonds:before {
 	content: '♦';
 }
 
@@ -145,11 +152,20 @@ p + span {
 	width: 14.28%;
 }
 
+#finishDecks .col-3 .deck {
+	width: 100%;
+}
+
 .col-3 {
 	width: 42.84%;
 }
 
-.col, .col-3 {
+.col-6 {
+	width: 57.16%;
+}
+
+.col,
+.col-3 {
 	box-sizing: border-box;
 	padding: 0 10px;
 }

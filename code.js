@@ -30,6 +30,7 @@ function Game() {
 
 	this.$stashContainer = document.getElementById('stashDecks');
 	this.$playContainer = document.getElementById('playDecks');
+	this.$finishContainer = document.getElementById('finishDecks');
 	this.$el = document.getElementById('game');
 
 	this.cardKits = this.generateCardKits();
@@ -98,6 +99,7 @@ Game.prototype = {
 
 		this.$stashContainer.innerHTML = '';
 		this.$playContainer.innerHTML = '';
+		this.$finishContainer.innerHTML = '';
 
 		this.dealDeck = new DealDeck(kits.splice(0, GAME_SETTINGS.amounts.dealDeck));
 		this.$stashContainer.appendChild(this.dealDeck.$wrapper);
@@ -105,7 +107,9 @@ Game.prototype = {
 		for (let i = 0; i < GAME_SETTINGS.suits.length; i++) {
 			let finishDeck = new FinishDeck([]);
 
-			this.$stashContainer.appendChild(finishDeck.$wrapper);
+			this.$finishContainer.appendChild(finishDeck.$wrapper);
+			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i]+'-wrap');
+			this.$stashContainer.appendChild(this.$finishContainer);
 		}
 
 		let deckSettings = GAME_SETTINGS.amounts.decks;
