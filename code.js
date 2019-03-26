@@ -106,7 +106,7 @@ Game.prototype = {
 			let finishDeck = new FinishDeck([]);
 
 			this.$finishContainer.appendChild(finishDeck.$wrapper);
-			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i],'inner-card');
+			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i], 'inner-card');
 			this.$stashContainer.appendChild(this.$finishContainer);
 		}
 
@@ -200,7 +200,10 @@ Game.prototype = {
 			let deck = e.detail.deck;
 			let cards = e.detail.cards;
 
-			// handle case when selectedDeck === deck
+			if (selectedDeck === deck) {
+				selectedCards = cards;
+				return;
+			}
 
 			if (deck === null) {
 				if (selectedDeck) {
