@@ -108,7 +108,7 @@ Game.prototype = {
 			let finishDeck = new FinishDeck([]);
 
 			this.$finishContainer.appendChild(finishDeck.$wrapper);
-			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i]+'-wrap');
+			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i], 'inner-card');
 			this.$stashContainer.appendChild(this.$finishContainer);
 		}
 
@@ -256,21 +256,24 @@ Deck.prototype = {
 	registerEvents: function () {
 		this.$el.addEventListener('card.click', this.onCardClick.bind(this));
 		this.$el.addEventListener('card.doubleclick', this.onCardDoubleClick.bind(this));
-		this.$el.addEventListener('click', this.onClick.bind(this));
 	},
 
 	onCardDoubleClick: function (e) {
+
 		let cardIndex = this.cards.indexOf(e.detail.card);
 		let cards = this.cards.slice(cardIndex);
 
 		this.cards.forEach((card) => card.unselect());
 		cards.forEach((card) => card.select());
 
-		if (e.detail.card.number === GAME_SETTINGS.numbers[0]) { 
-			FinishDeck.prototype.cards.push(e.detail.card);
-			console.log("cards: ", FinishDeck.prototype.cards);
-		}
+		this.$el.dispatchEvent(new CustomEvent('deck.doubleclick', {
+			bubbles: true,
+			detail: {
+				deck: this
+			}
+		}));
 
+		FinishDeck.prototype.onCardDoubleClick(e);
 	},
 
 	onCardClick: function (e) {
@@ -333,16 +336,6 @@ Deck.prototype = {
 
 	unselectCards: function () {
 		this.cards.forEach((card) => card.unselect());
-	},
-
-	onClick: function (e) {
-		this.$el.dispatchEvent(new CustomEvent('deck.click', {
-			bubbles: true,
-			detail: {
-				deck: this,
-				cards: []
-			}
-		}));
 	}
 }
 
@@ -467,7 +460,33 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 		this.suit = null;
 	},
 
-	cards: []
+	registerEvents: function () {
+		Deck.prototype.registerEvents.call(this);
+		this.$el.addEventListener('deck.doubleclick', this.onCardDoubleClick.bind(this));
+	},
+
+	cards: [],
+
+	onCardDoubleClick: function (e) {
+		let selectedDeck = null;
+		let selectedCards = [];
+		let cardIndex = this.cards.indexOf(e.detail.card);
+		let cards = this.cards.slice(cardIndex);
+
+		this.cards.forEach((card) => card.unselect());
+		cards.forEach((card) => card.select());
+
+		if (e.detail.card.number === GAME_SETTINGS.numbers[0]) {
+			this.cards.push(e.detail.card);
+			console.log("cards: ", this.cards);
+
+			selectedDeck = this.deck;
+			selectedCards = this.cards;
+
+			Game.prototype.moveCards(selectedDeck, selectedCards, e.detail.card);
+		}
+
+	},
 });
 
 PlayingDeck.prototype = Object.assign(Object.create(Deck.prototype), {

@@ -156,6 +156,17 @@ p+span {
 	width: 100%;
 }
 
+.spades.inner-card:before,
+.spades.inner-card:after,
+.clovers.inner-card:before,
+.clovers.inner-card:after,
+.diamonds.inner-card:after,
+.diamonds.inner-card:before,
+.hearts.inner-card:before,
+.hearts.inner-card:after {
+	display: none;
+}
+
 .col-3 {
 	width: 42.84%;
 }
