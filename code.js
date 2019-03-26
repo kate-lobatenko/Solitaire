@@ -1,5 +1,5 @@
 /*
-	Jack is treadted as 11
+	Jack is treated as 11
 	Queen is treated as 12
 	King is treated as 13
 	Ace is treated as 1
@@ -257,6 +257,7 @@ Deck.prototype = {
 	registerEvents: function () {
 		this.$el.addEventListener('card.click', this.onCardClick.bind(this));
 		this.$el.addEventListener('card.doubleclick', this.onCardDoubleClick.bind(this));
+		this.$el.addEventListener('click', this.onClick.bind(this));
 	},
 
 	onCardDoubleClick: function (e) {
@@ -279,7 +280,7 @@ Deck.prototype = {
 
 	onCardClick: function (e) {
 		let cardIndex = this.cards.indexOf(e.detail.card);
-		let cards = this.cards.slice(cardIndex);
+		let cards = this.cards.slice(cardIndex, cardIndex+1);
 
 		this.cards.forEach((card) => card.unselect());
 		cards.forEach((card) => card.select());
@@ -333,6 +334,16 @@ Deck.prototype = {
 		return (!cardTo && upperCard.number === 13) ||
 			(cardTo && upperCard.color != cardTo.color &&
 				cardTo.number - upperCard.number === 1);
+	},
+
+	onClick: function (e) {
+		this.$el.dispatchEvent(new CustomEvent('deck.click', {
+			bubbles: true,
+			detail: {
+				deck: this,
+				cards: []
+			}
+		}));
 	},
 
 	unselectCards: function () {
