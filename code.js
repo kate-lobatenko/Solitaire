@@ -271,7 +271,8 @@ Deck.prototype = {
 		this.$el.dispatchEvent(new CustomEvent('deck.doubleclick', {
 			bubbles: true,
 			detail: {
-				deck: this
+				deck: this,
+				cards: cards
 			}
 		}));
 
@@ -280,7 +281,7 @@ Deck.prototype = {
 
 	onCardClick: function (e) {
 		let cardIndex = this.cards.indexOf(e.detail.card);
-		let cards = this.cards.slice(cardIndex, cardIndex+1);
+		let cards = this.cards.slice(cardIndex, cardIndex + 1);
 
 		this.cards.forEach((card) => card.unselect());
 		cards.forEach((card) => card.select());
@@ -328,12 +329,15 @@ Deck.prototype = {
 	},
 
 	verifyTurn: function (cards) {
-		let upperCard = cards[0];
-		let cardTo = this.cards.slice(-1).pop();
+		if (cards.length) {
+			let upperCard = cards[0];
+			let cardTo = this.cards.slice(-1).pop();
 
-		return (!cardTo && upperCard.number === 13) ||
-			(cardTo && upperCard.color != cardTo.color &&
-				cardTo.number - upperCard.number === 1);
+			return (!cardTo && upperCard.number === 13) ||
+				(cardTo && upperCard.color != cardTo.color &&
+					cardTo.number - upperCard.number === 1);
+		}
+
 	},
 
 	onClick: function (e) {
@@ -480,22 +484,55 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 	cards: [],
 
 	onCardDoubleClick: function (e) {
-		let selectedDeck = null;
-		let selectedCards = [];
 		let card = e.detail.card;
 		let cards = this.cards;
+		let deck = this.deck;
 
-		if (e.detail.card.number === GAME_SETTINGS.numbers[0]) {
-			this.cards.push(e.detail.card);
-			console.log("cards: ", this.cards);
+		cards.push(card);
+		console.log("cards: ", cards);
 
-			let selectedDeck = this.deck;
-			let selectedCards = this.cards;
+		let selectedDeck = this.deck;
+		let selectedCards = this.cards;
 
-			Game.prototype.moveCards(selectedDeck, e.detail.card, cards);
+		this.moveCards(selectedCards, deck, selectedDeck);
+	},
+
+	verifyTurn: function (cards) {
+		if (cards.length) {
+			let upperCard = cards[0];
+			let cardTo = this.cards.slice(-1).pop();
+			let cardNumber = e.detail.card.number;
+
+			return (cardNumber === GAME_SETTINGS.numbers[0]) ||
+				(cardTo && upperCard.color === cardTo.color &&
+					cardTo.number - upperCard.number === 1);
 		}
 
 	},
+
+	moveCards: function (deckFrom, deckTo, cards) {
+		if (deckTo.addCards(cards)) {
+			deckFrom.removeCards(cards);
+
+			return true;
+		}
+
+		return false;
+	},
+
+	addCards: function (cards) {
+		if (!this.verifyTurn(cards)) {
+			return false;
+		}
+
+		for (let i = 0; i < cards.length; i++) {
+			this.$el.appendChild(cards[i].$el);
+			this.cards.push(cards[i]);
+		}
+
+		return true;
+
+	}
 });
 
 PlayingDeck.prototype = Object.assign(Object.create(Deck.prototype), {
