@@ -42,7 +42,6 @@ function Game() {
 function DealDeck() {
 	Deck.apply(this, arguments);
 
-	//deal deck must create extra deck node nearby to place opened cards there
 	this.$el.classList.add('flat');
 	this.$wrapper.classList.add('col-3');
 }
@@ -62,7 +61,7 @@ function PlayingDeck(cardsKit) {
 	this.openLastCard();
 }
 
-function Deck(cardKits) { // cards kit is array of objects like this [{number: 1, suit: 0, color: 0}, {number: 6, suit: 1, color: 1}]
+function Deck(cardKits) {
 	this.cards = [];
 
 	this.$el = document.createElement('div');
@@ -72,7 +71,6 @@ function Deck(cardKits) { // cards kit is array of objects like this [{number: 1
 		this.createCards(cardKits);
 	}
 
-	//decks must be wrapped in .col div
 	this.$wrapper.appendChild(this.$el);
 	this.$wrapper.classList.add('col');
 	this.$el.classList.add('deck');
@@ -108,7 +106,7 @@ Game.prototype = {
 			let finishDeck = new FinishDeck([]);
 
 			this.$finishContainer.appendChild(finishDeck.$wrapper);
-			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i], 'inner-card');
+			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i],'inner-card');
 			this.$stashContainer.appendChild(this.$finishContainer);
 		}
 
@@ -470,20 +468,17 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 	onCardDoubleClick: function (e) {
 		let selectedDeck = null;
 		let selectedCards = [];
-		let cardIndex = this.cards.indexOf(e.detail.card);
-		let cards = this.cards.slice(cardIndex);
-
-		this.cards.forEach((card) => card.unselect());
-		cards.forEach((card) => card.select());
+		let card = e.detail.card;
+		let cards = this.cards;
 
 		if (e.detail.card.number === GAME_SETTINGS.numbers[0]) {
 			this.cards.push(e.detail.card);
 			console.log("cards: ", this.cards);
 
-			selectedDeck = this.deck;
-			selectedCards = this.cards;
+			let selectedDeck = this.deck;
+			let selectedCards = this.cards;
 
-			Game.prototype.moveCards(selectedDeck, selectedCards, e.detail.card);
+			Game.prototype.moveCards(selectedDeck, e.detail.card, cards);
 		}
 
 	},
