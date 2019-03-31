@@ -67,6 +67,10 @@ function Deck(cardKits) {
 	this.$el = document.createElement('div');
 	this.$wrapper = document.createElement('div');
 
+	if (typeof (cardKits) == 'undefined') {
+		return;
+	}
+
 	if (cardKits.length) {
 		this.createCards(cardKits);
 	}
@@ -106,7 +110,8 @@ Game.prototype = {
 			let finishDeck = new FinishDeck([]);
 
 			this.$finishContainer.appendChild(finishDeck.$wrapper);
-			finishDeck.$wrapper.classList.add('col', 'col-3', GAME_SETTINGS.suitsNames[i], 'inner-card');
+			finishDeck.$wrapper.classList.add('col', 'col-3', 'inner-card');
+			finishDeck.$wrapper.id = GAME_SETTINGS.suitsNames[i];
 			this.$stashContainer.appendChild(this.$finishContainer);
 		}
 
@@ -299,7 +304,6 @@ Deck.prototype = {
 		for (let i = 0; i < this.cards.length; i++) {
 			let currentCard = this.cards[i];
 
-			// refactor this shit
 			if (currentCard.color === card.color && currentCard.number === card.number && currentCard.suit === card.suit) {
 				return i;
 			}
@@ -468,6 +472,19 @@ DealDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 });
 
 FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
+	getContainers: function () {
+		let deckHearts = document.getElementById("hearts"),
+			deckDiamonds = document.getElementById("diamonds"),
+			deckClovers = document.getElementById("clovers"),
+			deckSpades = document.getElementById("spades");
+		return {
+			deckHearts: deckHearts,
+			deckDiamonds: deckDiamonds,
+			deckClovers: deckClovers,
+			deckSpades: deckSpades
+		}
+	},
+
 	isEmpty: function () {
 		return !(this.suit || this.cards.length);
 	},
@@ -486,18 +503,20 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 	onCardDoubleClick: function (e) {
 		let card = e.detail.card;
 		let cards = this.cards;
-		let deck = this.deck;
+
+		let deckHearts = this.getContainers().deckHearts,
+		deckDiamonds = this.getContainers().deckDiamonds,
+		deckClovers = this.getContainers().deckClovers,
+		deckSpades = this.getContainers().deckSpades;
 
 		cards.push(card);
+		console.log("deckHearts: ", deckHearts);
 		console.log("cards: ", cards);
 
-		let selectedDeck = this.deck;
-		let selectedCards = this.cards;
-
-		this.moveCards(selectedCards, deck, selectedDeck);
+		this.moveCards(cards, deckHearts, cards);
 	},
 
-	verifyTurn: function (cards) {
+	verifyTurn: function (cards, e) {
 		if (cards.length) {
 			let upperCard = cards[0];
 			let cardTo = this.cards.slice(-1).pop();
