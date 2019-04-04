@@ -276,8 +276,8 @@ Deck.prototype = {
 		this.$el.dispatchEvent(new CustomEvent('deck.doubleclick', {
 			bubbles: true,
 			detail: {
-				deck: this,
-				cards: cards
+				//deck: this,
+				card: this
 			}
 		}));
 
@@ -498,40 +498,55 @@ FinishDeck.prototype = Object.assign(Object.create(Deck.prototype), {
 		this.$el.addEventListener('deck.doubleclick', this.onCardDoubleClick.bind(this));
 	},
 
-	cards: [],
+	finishCards: [],
 
 	onCardDoubleClick: function (e) {
 		let card = e.detail.card;
-		let cards = this.cards;
 
 		let deckHearts = this.getContainers().deckHearts,
-		deckDiamonds = this.getContainers().deckDiamonds,
-		deckClovers = this.getContainers().deckClovers,
-		deckSpades = this.getContainers().deckSpades;
+			deckDiamonds = this.getContainers().deckDiamonds,
+			deckClovers = this.getContainers().deckClovers,
+			deckSpades = this.getContainers().deckSpades;
 
-		cards.push(card);
-		console.log("deckHearts: ", deckHearts);
-		console.log("cards: ", cards);
+		if (this.finishCards.length===0 || this.finishCards.card !== undefined ){
+			this.finishCards.push(card);
+			console.log(this.finishCards);
 
-		this.moveCards(cards, deckHearts, cards);
+			switch (e.detail.card.suit) {
+				case 0:
+					this.moveCards(this.finishCards, deckHearts);
+					break;
+				case 1:
+					this.moveCards(this.finishCards, deckDiamonds);
+					break;
+				case 2:
+					this.moveCards(this.finishCards, deckClovers);
+					break;
+				case 3:
+					this.moveCards(this.finishCards, deckSpades);
+					break;
+			}
+		}
+
+
 	},
 
-	verifyTurn: function (cards, e) {
-		if (cards.length) {
-			let upperCard = cards[0];
-			let cardTo = this.cards.slice(-1).pop();
-			let cardNumber = e.detail.card.number;
+	verifyTurn: function (card) {
+		if (this.finishCards.length) {
+			let upperCard = this.finishCards[0];
+			let cardTo = this.finishCards.slice(-1).pop();
+			let cardNumber = card.number;
 
 			return (cardNumber === GAME_SETTINGS.numbers[0]) ||
-				(cardTo && upperCard.color === cardTo.color &&
+			 (cardTo && upperCard.color === cardTo.color &&
 					cardTo.number - upperCard.number === 1);
 		}
 
 	},
 
-	moveCards: function (deckFrom, deckTo, cards) {
-		if (deckTo.addCards(cards)) {
-			deckFrom.removeCards(cards);
+	moveCards: function (fromDeck, toDeck, cards) {
+		if (this.addCards(cards)) {
+			this.removeCards(cards);
 
 			return true;
 		}
