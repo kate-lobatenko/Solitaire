@@ -1,4 +1,5 @@
-html,body {
+html,
+body {
 	width: 100%;
 	padding-bottom: 30px;
 }
@@ -10,15 +11,20 @@ html,body {
 	padding: 10px;
 	min-height: 800px;
 	background: #1b4c25;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .deck {
 	min-height: 170px;
-	width: 100%;
 }
 
 .col-3 .deck {
 	width: 30%;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 .col-3 .deck:first-child {
@@ -37,7 +43,8 @@ html,body {
 .card {
 	width: 100%;
 	height: 170px;
-	background: #7699e8;
+	background-image: -moz-repeating-linear-gradient(34% 6% 135deg, #0F1E59, #75A1BF, #3E3E63 50%);
+	background-image: -webkit-gradient(radial, center center, 20, center center, 80, from(#3c3), color-stop(0.4, #363), to(#030));
 	font-size: 30px;
 	line-height: 25px;
 	display: flex;
@@ -47,21 +54,26 @@ html,body {
 	padding: 5px;
 	box-sizing: border-box;
 	border: 2px solid #cac6c6;
-	float: left;
 	grid-column: 1;
 	margin-top: -160px;
+	pointer-events: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-p + span {
+p+span {
 	background: red;
 }
 
-.card:not(.open) + .card.open {
+.card:not(.open)+.card.open {
 	margin-top: -160px;
 }
 
 .card.open {
-	margin-top: -145px
+	margin-top: -145px;
+	pointer-events: all;
 }
 
 .card.selected {
@@ -69,6 +81,11 @@ p + span {
 }
 
 .deck.flat .card {
+	margin-top: -170px;
+}
+
+.col-3 .card.open {
+	margin-left: calc(100% + 20px);
 	margin-top: -170px;
 }
 
@@ -89,27 +106,33 @@ p + span {
 	left: 5px;
 }
 
-.spades.open, .clovers.open {
+.spades.open,
+.clovers.open {
 	color: #000;
 }
 
-.hearts.open, .diamonds.open {
+.hearts.open,
+.diamonds.open {
 	color: #ea6262;
 }
 
-.spades:after, .spades:before {
+.spades:after,
+.spades:before {
 	content: '♠';
 }
 
-.hearts:after, .hearts:before {
+.hearts:after,
+.hearts:before {
 	content: '♥';
 }
 
-.clovers:after, .clovers:before {
+.clovers:after,
+.clovers:before {
 	content: '♣';
 }
 
-.diamonds:after, .diamonds:before {
+.diamonds:after,
+.diamonds:before {
 	content: '♦';
 }
 
@@ -129,12 +152,31 @@ p + span {
 	width: 14.28%;
 }
 
+#finishDecks .col-3 .deck {
+	width: 100%;
+}
+
+.spades.inner-card:before,
+.spades.inner-card:after,
+.clovers.inner-card:before,
+.clovers.inner-card:after,
+.diamonds.inner-card:after,
+.diamonds.inner-card:before,
+.hearts.inner-card:before,
+.hearts.inner-card:after {
+	display: none;
+}
+
 .col-3 {
 	width: 42.84%;
 }
 
-.col, .col-3 {
-	display: flex;
+.col-6 {
+	width: 57.16%;
+}
+
+.col,
+.col-3 {
 	box-sizing: border-box;
 	padding: 0 10px;
 }
